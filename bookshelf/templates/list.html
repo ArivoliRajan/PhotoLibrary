@@ -1,0 +1,122 @@
+{#
+# Copyright 2015 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#}
+
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+      <div id="imageCarousel" class="carousel slide carousel-fade" data-interval="2000"
+          data-ride="carousel" data-pause="hover" data-wrap="true">
+
+          <!-- Carousel indicators -->
+          <ol class="carousel-indicators">
+            {% for book in books %}
+              <li data-target="#imageCarousel" data-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
+            {% endfor %}
+          </ol>
+
+              <div class="carousel-inner">
+
+
+                {% for book in books %}
+                      <div class="carousel-item  {% if loop.first %}active{% endif %}">
+                    <div class="row is-flex">
+                      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                      </div>
+                      <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6">
+
+                              {% if book.faceDetectUrl %}
+                                  <img src="{{book.faceDetectUrl}}" class=" img-fluid img-responsive ">
+                              {% else %}
+                                  <img src="{{book.imageUrl}}" class=" img-fluid img-responsive ">
+                              {% endif %}
+                      </div>
+                      <div class="col-sm-4 col-md-4 col-lg-4">
+                        <table class="table-responsive table-borderless table-sm table-hover w-auto small">
+
+                      <tbody >
+                        <tr>
+                          <td><span style="font-weight:bold">Title</span></td>
+                          <td>{{book.title}}</td>
+                        </tr>
+                        <tr>
+                          <td><span style="font-weight:bold">Photographer  </span></td>
+                          <td>{{book.author}}</td>
+                        </tr>
+                        <tr>
+                          <td><span style="font-weight:bold">Date</span></td>
+                          <td>{{book.publishedDate}}</td>
+                        </tr>
+
+                        {% if book.landmark %}
+                          <tr>
+                            <td><span style="font-weight:bold; vertical-align:top">Landmark</span></td>
+                            <td>{{book.landmark}} (Confidence Score: {{book.confidencescore}} )</td>
+                          </tr>
+                        {% endif %}
+                        {% if book.facesCount != "0" %}
+                          <tr>
+                            <td><span style="font-weight:bold; vertical-align:top">Number Of Faces</span></td>
+                            <td>{{book.facesCount}}</td>
+                          </tr>
+                        {% endif %}
+                        {% if book.ExtractedText %}
+                          <tr>
+                            <td><span style="font-weight:bold; vertical-align:top">Extracted Text</span></td>
+                            <td>{{book.ExtractedText}}</td>
+                          </tr>
+                        {% endif %}
+                        {% if book.HindiText %}
+                          <tr>
+                            <td><span style="font-weight:bold; vertical-align:top">Text in Hindi</span></td>
+                            <td>{{book.HindiText}}</td>
+                          </tr>
+                        {% endif %}
+                        {% if book.ChineseText %}
+                          <tr>
+                            <td><span style="font-weight:bold; vertical-align:top">Text in Chinese</span></td>
+                            <td>{{book.ChineseText}}</td>
+                          </tr>
+                        {% endif %}
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                  </div>
+                </div>
+              </div>
+                {% endfor %}
+              </div>
+
+              <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+        </div>
+
+
+
+
+
+
+{% endblock %}
